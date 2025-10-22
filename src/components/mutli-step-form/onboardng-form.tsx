@@ -4,17 +4,18 @@ import { useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import OnboardingModal from './onboarding-modal';
+import { useRouter } from 'next/navigation';
 
-// Define the type for the form data
 interface FormData {
     name: string;
     email: string;
     howHeard?: string;
-    interests: string[];
+    interests?: string[];
     goal?: string;
 }
 
 const MultiStepForm = () => {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [step, setStep] = useState(1);
     const [showErrors, setShowErrors] = useState(false);
@@ -39,13 +40,13 @@ const MultiStepForm = () => {
                 isValid = await trigger(['name', 'email']);
                 break;
             case 2:
-                isValid = await trigger(['howHeard']);
+                isValid = await trigger(['howHeard']); // Validation only if it's filled in
                 break;
             case 3:
-                isValid = true;
+                isValid = true; // No validation needed for interests
                 break;
             case 4:
-                isValid = await trigger(['goal']);
+                isValid = await trigger(['goal']); // Validation only if it's filled in
                 break;
             default:
                 isValid = false;
@@ -133,10 +134,7 @@ const MultiStepForm = () => {
                                 <input
                                     type="text"
                                     id="howHeard"
-                                    {...register('howHeard', {
-                                        required: 'This field is required',
-                                        validate: (value) => value?.trim() !== '' || 'This field is required'
-                                    })}
+                                    {...register('howHeard')}
                                     className="w-full p-2 rounded-md bg-neutral-700 text-white border border-neutral-600 focus:outline-none"
                                 />
                                 {shouldShowError('howHeard') && (
@@ -211,9 +209,6 @@ const MultiStepForm = () => {
                                     </div>
                                 )}
                             />
-                            {shouldShowError('interests') && (
-                                <p className="text-red-500 text-sm">{errors.interests?.message}</p>
-                            )}
                         </motion.div>
                     )}
 
@@ -230,10 +225,7 @@ const MultiStepForm = () => {
                                 <input
                                     type="text"
                                     id="goal"
-                                    {...register('goal', {
-                                        required: 'This field is required',
-                                        validate: (value) => value?.trim() !== '' || 'This field is required'
-                                    })}
+                                    {...register('goal')}
                                     className="w-full p-2 rounded-md bg-neutral-700 text-white border border-neutral-600 focus:outline-none"
                                 />
                                 {shouldShowError('goal') && (
@@ -249,7 +241,7 @@ const MultiStepForm = () => {
                                 Back
                             </button>
                         )}
-                        {step < 4 ? (
+                        {step < 5 ? (
                             <button
                                 type="button"
                                 onClick={nextStep}
@@ -269,7 +261,12 @@ const MultiStepForm = () => {
                     </div>
                 </div>
             </form>
-            <OnboardingModal open={open} setOpen={setOpen} />
+            <OnboardingModal
+                open={open}
+                setOpen={() => {
+                    setOpen(false);
+                    router.push('/');
+                }} />
         </div>
     );
 };
