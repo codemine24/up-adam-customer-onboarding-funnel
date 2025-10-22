@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { motion } from 'framer-motion';
+import OnboardingModal from './onboarding-modal';
 
 // Define the type for the form data
 interface FormData {
@@ -14,6 +15,7 @@ interface FormData {
 }
 
 const MultiStepForm = () => {
+    const [open, setOpen] = useState(false);
     const [step, setStep] = useState(1);
     const [showErrors, setShowErrors] = useState(false);
     const {
@@ -61,7 +63,7 @@ const MultiStepForm = () => {
     };
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        console.log(data);
+        setOpen(true);
     };
 
     const shouldShowError = (fieldName: keyof FormData) => {
@@ -267,6 +269,7 @@ const MultiStepForm = () => {
                     </div>
                 </div>
             </form>
+            <OnboardingModal open={open} setOpen={setOpen} />
         </div>
     );
 };
