@@ -42,7 +42,6 @@ export default function Home() {
             variants={textChild}
             initial="hidden"
             animate="visible"
-            transition={{ delay: 1.2 }}
           >
             Adam Customer Onboarding is a multi-step form that helps you to
             onboarding your customers. Build your own onboarding form in
