@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
@@ -15,9 +15,9 @@ interface FormData {
 }
 
 const MultiStepForm = () => {
-    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [step, setStep] = useState(1);
+    const router = useRouter();
     const [showErrors, setShowErrors] = useState(false);
     const {
         handleSubmit,
@@ -40,13 +40,13 @@ const MultiStepForm = () => {
                 isValid = await trigger(['name', 'email']);
                 break;
             case 2:
-                isValid = await trigger(['howHeard']); // Validation only if it's filled in
+                isValid = await trigger(['howHeard']);
                 break;
             case 3:
-                isValid = true; // No validation needed for interests
+                isValid = true;
                 break;
             case 4:
-                isValid = await trigger(['goal']); // Validation only if it's filled in
+                isValid = await trigger(['goal']);
                 break;
             default:
                 isValid = false;
@@ -72,7 +72,7 @@ const MultiStepForm = () => {
     };
 
     return (
-        <div className="max-w-lg mx-auto p-6 bg-neutral-900 rounded-lg shadow-lg">
+        <div className="max-w-lg mx-auto p-6 bg-neutral-900 rounded-lg shadow-lg mt-10">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="step-container">
                     {/* Step 1: Personal Info */}
