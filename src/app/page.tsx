@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="relative flex min-h-screen w-full flex-col items-start justify-start overflow-hidden">
       <BackgroundRippleEffect />
-      <div className="w-full h-screen flex flex-col items-center justify-center text-center">
+      <div className="w-full h-screen flex flex-col items-center justify-center text-center mt-10">
         <motion.h1
           className="text-7xl md:text-8xl font-semibold w-2/3 flex flex-col gap-4 leading-[1.2] z-10"
           variants={textContainer}
