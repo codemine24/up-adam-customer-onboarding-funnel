@@ -9,31 +9,25 @@ interface FormData {
     name: string;
     email: string;
     howHeard?: string;
-    interests: string[];  // Interests are optional now
+    interests: string[];
     goal?: string;
 }
 
 const MultiStepForm = () => {
     const [step, setStep] = useState(1);
     const [showErrors, setShowErrors] = useState(false);
-
-    // Initialize react-hook-form with types for form data
     const {
         handleSubmit,
         control,
         register,
         formState: { errors },
         trigger,
-        getValues,
-        watch
     } = useForm<FormData>({
-        mode: 'onSubmit', // Only validate on submit
+        mode: 'onSubmit',
         shouldFocusError: false,
     });
 
-    // Move to the next step
     const nextStep = async () => {
-        // Show errors when trying to proceed
         setShowErrors(true);
 
         let isValid = false;
@@ -46,7 +40,6 @@ const MultiStepForm = () => {
                 isValid = await trigger(['howHeard']);
                 break;
             case 3:
-                // For "interests", we don't need to validate if it's empty
                 isValid = true;
                 break;
             case 4:
@@ -68,10 +61,9 @@ const MultiStepForm = () => {
     };
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        console.log(data); // Handle form submission logic here
+        console.log(data);
     };
 
-    // Function to check if we should show error for a field
     const shouldShowError = (fieldName: keyof FormData) => {
         return showErrors && errors[fieldName];
     };
